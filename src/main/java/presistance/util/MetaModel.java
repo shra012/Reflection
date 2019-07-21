@@ -6,12 +6,14 @@ import presistance.annotations.PrimaryKey;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class MetaModel<T> {
+public class MetaModel {
 
-    private Class<T> clazz;
+    private Class<?> clazz;
 
-    public  MetaModel(Class<T> clazz) {
+    public  MetaModel(Class<?> clazz) {
 
         this.clazz = clazz;
     }
@@ -49,4 +51,17 @@ public class MetaModel<T> {
     }
 
 
+    public String buildInsertRequest() {
+        String elementNames = buildColumnNames();
+        int numberOfColumns = getColumns().size()+1;
+        String questionMarkString = IntStream.range(0,numberOfColumns).mapToObj(index->"?").collect(Collectors.joining(", "));
+        return "Insert into "+this.clazz.getSimpleName() + " ("+elementNames+") values ("+questionMarkString+")";
+    }
+
+    private String buildColumnNames() {
+        String primaryKeyColumnName = getPrimaryKey().getField().getName();
+        List<String> columnNames = getColumns().stream().map(field ->  field.getField().getName()).collect(Collectors.toList());
+        columnNames.add(0,primaryKeyColumnName);
+        return String.join(", ",columnNames);
+    }
 }

@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        MetaModel<Person> metaModel = MetaModel.of(Person.class);
+        MetaModel metaModel = MetaModel.of(Person.class);
 
         PrimaryKeyField primaryKeyField = metaModel.getPrimaryKey();
         List<ColumnField> columnFieldList = metaModel.getColumns();

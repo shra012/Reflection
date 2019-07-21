@@ -17,4 +17,8 @@ public class ColumnField {
                 " field type = " + field.getType() +
                 " }";
     }
+
+    public Field getField() {
+        return field;
+    }
 }
