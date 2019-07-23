@@ -52,10 +52,11 @@ public class MetaModel {
 
 
     public String buildInsertRequest() {
+    	//insert into person (id, name, age) values (?, ?, ?)
         String elementNames = buildColumnNames();
         int numberOfColumns = getColumns().size()+1;
         String questionMarkString = IntStream.range(0,numberOfColumns).mapToObj(index->"?").collect(Collectors.joining(", "));
-        return "Insert into "+this.clazz.getSimpleName() + " ("+elementNames+") values ("+questionMarkString+")";
+        return "insert into "+this.clazz.getSimpleName() + " ("+elementNames+") values ("+questionMarkString+")";
     }
 
     private String buildColumnNames() {
@@ -64,4 +65,11 @@ public class MetaModel {
         columnNames.add(0,primaryKeyColumnName);
         return String.join(", ",columnNames);
     }
+
+	public String buildReadRequest() {
+		//select id, name, age from Person where id = ?
+		String elementNames = buildColumnNames();
+		String primaryKeyColumnName = getPrimaryKey().getField().getName();
+		return "select "+elementNames+" from "+this.clazz.getSimpleName()+" where "+primaryKeyColumnName+" = ?" ;
+	}
 }
