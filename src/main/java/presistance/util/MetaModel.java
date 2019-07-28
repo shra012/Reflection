@@ -60,8 +60,8 @@ public class MetaModel {
     }
 
     private String buildColumnNames() {
-        String primaryKeyColumnName = getPrimaryKey().getField().getName();
-        List<String> columnNames = getColumns().stream().map(field ->  field.getField().getName()).collect(Collectors.toList());
+        String primaryKeyColumnName = getPrimaryKey().getName();
+        List<String> columnNames = getColumns().stream().map(field ->  field.getName()).collect(Collectors.toList());
         columnNames.add(0,primaryKeyColumnName);
         return String.join(", ",columnNames);
     }
@@ -69,7 +69,7 @@ public class MetaModel {
 	public String buildReadRequest() {
 		//select id, name, age from Person where id = ?
 		String elementNames = buildColumnNames();
-		String primaryKeyColumnName = getPrimaryKey().getField().getName();
+		String primaryKeyColumnName = getPrimaryKey().getName();
 		return "select "+elementNames+" from "+this.clazz.getSimpleName()+" where "+primaryKeyColumnName+" = ?" ;
 	}
 }

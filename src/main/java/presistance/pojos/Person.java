@@ -5,11 +5,11 @@ import presistance.annotations.PrimaryKey;
 
 public class Person {
 
-    @PrimaryKey
+    @PrimaryKey(columnName = "id")
     private long id;
-    @Column
+    @Column(columnName = "name")
     private String name;
-    @Column
+    @Column(columnName = "age")
     private int age;
 
     public Person() {

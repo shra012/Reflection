@@ -7,7 +7,7 @@ public interface EntityManager<T> {
     T read(Class<T> clazz,long primaryKey) throws Exception;
 
     static <T> EntityManager<T> of(Class<T> clss){
-        return new EntityManagerImpl<T>(clss);
+        return new H2EntityManager<T>(clss);
     }
 
 }
