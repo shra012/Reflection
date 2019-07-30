@@ -7,7 +7,7 @@ import presistance.pojos.Person;
 
 public class WritingObjects {
 	public static void main(String[] args) throws Exception {
-		// Removed as we have advanced to dependancy Injection
+		// Removed as we have advanced to dependency Injection
 		// We have to use BeanManager
 		//EntityManager<Person> entityManager = EntityManager.of(Person.class);
 		BeanManager manager = BeanManager.getInstance();
@@ -15,7 +15,5 @@ public class WritingObjects {
 		Person venkat = new Person("Venkat",27);
 		entityManager.persist(venkat);
 		System.out.println(venkat);
-
-
 	}
 }
