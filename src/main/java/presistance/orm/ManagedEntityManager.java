@@ -8,13 +8,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicLong;
 
+import presistance.annotations.Inject;
 import presistance.util.ColumnField;
 import presistance.util.MetaModel;
 import presistance.util.PrimaryKeyField;
 
-public abstract class AbstractEntityManager<T> implements EntityManager<T> {
+public class ManagedEntityManager<T> implements EntityManager<T> {
 
-    private AtomicLong idGenerator = new AtomicLong(3L);
+    private AtomicLong idGenerator = new AtomicLong(2L);
+    
+    @Inject
+    private Connection connection;
 
     private class PreparedStatementWrapper{
 
@@ -59,11 +63,11 @@ public abstract class AbstractEntityManager<T> implements EntityManager<T> {
         }
     }
 
-    public AbstractEntityManager(Class<T> clss) {
+    public ManagedEntityManager(Class<T> clss) {
 
     }
 
-    public AbstractEntityManager() {}
+    public ManagedEntityManager() {}
 
     @Override
     public void persist(T t) throws SQLException, IllegalAccessException {
@@ -123,12 +127,9 @@ public abstract class AbstractEntityManager<T> implements EntityManager<T> {
     }
 
     private PreparedStatementWrapper prepareStatementWith(String sql) throws SQLException {
-        Connection connection =  buildConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
         return new PreparedStatementWrapper(statement);
     }
-
-    public abstract  Connection buildConnection() throws SQLException;
 
 }
 

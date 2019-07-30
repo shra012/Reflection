@@ -1,25 +1,21 @@
 package presistance.driver;
 
+import presistance.orm.BeanManager;
 import presistance.orm.EntityManager;
+import presistance.orm.ManagedEntityManager;
 import presistance.pojos.Person;
 
 public class WritingObjects {
-    public static void main(String[] args) throws Exception {
-        EntityManager<Person> entityManager = EntityManager.of(Person.class);
-        
-		/*
-		 * Person shravan = new Person("Shravan",25);
-		 * Person malavika = new
-		 * Person("Malavika",24);
-		 * entityManager.persist(shravan);
-		 * entityManager.persist(malavika);
-		 * 
-		 * System.out.println(shravan);
-		 * System.out.println(malavika);
-		 */
-        Person gokul = entityManager.read(Person.class, 3);
-        
-        System.out.println(gokul);
-        
-    }
+	public static void main(String[] args) throws Exception {
+		// Removed as we have advanced to dependancy Injection
+		// We have to use BeanManager
+		//EntityManager<Person> entityManager = EntityManager.of(Person.class);
+		BeanManager manager = BeanManager.getInstance();
+		EntityManager<Person> entityManager = manager.getInstance(ManagedEntityManager.class);
+		Person venkat = new Person("Venkat",27);
+		entityManager.persist(venkat);
+		System.out.println(venkat);
+
+
+	}
 }
