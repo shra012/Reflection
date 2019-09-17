@@ -5,7 +5,7 @@ image_resource:
   type: docker-image
   source:
     repository: maven
-    tag: 3.3.9-jdk-12
+    tag: 3.6.2-jdk-12
 
 inputs:
 - name: reflection-code
