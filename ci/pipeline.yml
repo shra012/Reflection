@@ -1,0 +1,28 @@
+---
+resources:
+- name: reflection-code
+  type: git
+  source:
+    uri: https://github.com/shra012/Reflection.git
+    branch: master
+    
+jobs:
+  - name: java-build
+    plan:
+    - get: reflection-code
+    - task: build
+      file: reflection-code/ci/build.yml 
+    - task: review-results
+      config: 
+        platform: linux
+        image_resource:
+          type: docker-image
+          source: {repository: ubuntu}
+        inputs:
+        - name: artifacts   
+        outputs:
+        - name: results
+        run:
+            path : find
+            args : [.]
+# fly -t targetName set-pipeline -c pipeline.yml -p reflection-pipline
